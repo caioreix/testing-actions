@@ -4,35 +4,11 @@ on:
   pull_request:
 
 jobs:
-  setup:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-go@v2
-        with:
-          go-version: 1.17
-  lint:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: golangci-lint
-        uses: golangci/golangci-lint-action@v2
-        with:
-          version: latest
-          skip-go-installation: true
-  test:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - run: go test -v -race ./...
   build:
-    needs:
-      - setup
-      - lint
-      - test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: caioreix/testing-actions/.github/workflows/setup.yml
+      - uses: caioreix/testing-actions/.github/workflows/lint.yml
+      - uses: caioreix/testing-actions/.github/workflows/test.yml
       - run: go build -o ./bin/bot -v ./cmd...
