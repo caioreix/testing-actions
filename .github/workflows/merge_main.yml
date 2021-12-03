@@ -13,14 +13,6 @@ jobs:
       - uses: actions/setup-go@v2
         with:
           go-version: 1.17
-      - name: Add Heroku buildin tags
-        run: |
-          echo // +heroku goVersion go1.11 >> temp.txt
-          echo // +heroku install ./cmd/... ./bin/bot >> temp.txt
-          cat ./go.mod >> temp.txt
-          rm -r go.mod
-          cat temp.txt >> go.mod
-          rm -r temp.txt
   lint:
     needs: setup
     runs-on: ubuntu-latest
@@ -45,6 +37,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Add Heroku buildin tags
+        run: |
+          echo // +heroku goVersion go1.11 >> temp.txt
+          echo // +heroku install ./cmd/... ./bin/bot >> temp.txt
+          cat ./go.mod >> temp.txt
+          rm -r go.mod
+          cat temp.txt >> go.mod
+          rm -r temp.txt
       - uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
