@@ -41,6 +41,10 @@ jobs:
         run: |
           echo // +heroku goVersion go1.17 >> temp.txt
           echo // +heroku install ./cmd/... >> temp.txt
+          cat ./go.mod >> temp.txt
+          rm -r go.mod
+          cat temp.txt >> go.mod
+          rm -r temp.txt
       - uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
