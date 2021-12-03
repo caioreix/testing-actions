@@ -5,13 +5,13 @@ on:
 
 jobs:
   setup:
-    uses: caioreix/testing-actions/.github/workflows/setup.yml@v1
+    uses: caioreix/testing-actions/.github/workflows/setup.yml@latest
   lint:
     needs: setup
-    uses: caioreix/testing-actions/.github/workflows/lint.yml@v1
+    uses: caioreix/testing-actions/.github/workflows/lint.yml@latest
   test:
     needs: setup
-    uses: caioreix/testing-actions/.github/workflows/test.yml@v1
+    uses: caioreix/testing-actions/.github/workflows/test.yml@latest
   build:
     needs: 
       - setup
