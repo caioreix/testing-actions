@@ -9,20 +9,18 @@ jobs:
   setup:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - uses: actions/setup-go@v2
         with:
           go-version: 1.17
       - name: Add Heroku buildin tags
         run: |
-          tree
-          ls ${{ github.workspace }}
           echo // +heroku goVersion go1.11 >> temp.txt
           echo // +heroku install ./cmd/... ./bin/bot >> temp.txt
           cat ./go.mod >> temp.txt
           rm -r go.mod
           cat temp.txt >> go.mod
           rm -r temp.txt
-          ls ${{ github.workspace }}
   lint:
     needs: setup
     runs-on: ubuntu-latest

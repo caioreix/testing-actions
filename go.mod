@@ -1,5 +1,3 @@
-// +heroku goVersion go1.11
-// +heroku install ./cmd/... ./bin/bot
 module github.com/caioreix/testing-actions
 
 go 1.17
