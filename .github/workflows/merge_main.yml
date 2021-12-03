@@ -1,0 +1,54 @@
+name: CI-CD
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-go@v2
+        with:
+          go-version: 1.17
+      - name: Add Heroku buildin tags
+        run: |
+          echo // +heroku goVersion go1.11 >> temp.txt
+          echo // +heroku install ./cmd/... ./bin/bot >> temp.txt
+          cat ./go.mod >> temp.txt
+          rm -r go.mod
+          cat temp.txt >> go.mod
+          rm -r temp.txt
+          ls ${{ github.workspace }}
+  lint:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v2
+        with:
+          version: latest
+          skip-go-installation: true
+  test:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: go test -v -race ./... 
+  deploy:
+    needs:
+      - setup
+      - lint
+      - test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }} #Must be unique in Heroku
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
+          appdir: "code"
+          procfile: "worker: bin/bot"

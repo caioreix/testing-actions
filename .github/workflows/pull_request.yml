@@ -1,12 +1,7 @@
-name: CI/CD
+name: CI
 
 on:
-  push:
-    branches: 
-      - master
   pull_request:
-    branches: 
-      - master
 
 jobs:
   setup:
@@ -33,9 +28,9 @@ jobs:
       - run: go test -v -race ./...
   build:
     needs:
+      - setup
       - lint
       - test
-      - setup
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
