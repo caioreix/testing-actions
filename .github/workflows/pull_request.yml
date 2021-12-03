@@ -19,7 +19,7 @@ jobs:
           rm -r go.mod
           cat temp.txt >> go.mod
           rm -r temp.txt
-          ls ${{ github.workspace }}
+          cat go.mod
   lint:
     needs: setup
     runs-on: ubuntu-latest
