@@ -14,6 +14,7 @@ jobs:
           go-version: 1.17
       - name: Add Heroku buildin tags
         run: |
+          tree
           ls ${{ github.workspace }}
           echo // +heroku goVersion go1.11 >> temp.txt
           echo // +heroku install ./cmd/... ./bin/bot >> temp.txt
