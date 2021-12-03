@@ -5,13 +5,13 @@ on:
 
 jobs:
   setup:
-    uses: caioreix/testing-actions/.github/workflows/setup.yml@${{ github.ref }}
+    uses: caioreix/testing-actions/.github/workflows/setup.yml@$GITHUB_REF
   lint:
     needs: setup
-    uses: caioreix/testing-actions/.github/workflows/lint.yml@${{ github.ref }}
+    uses: caioreix/testing-actions/.github/workflows/lint.yml@$GITHUB_REF
   test:
     needs: setup
-    uses: caioreix/testing-actions/.github/workflows/test.yml@${{ github.ref }}
+    uses: caioreix/testing-actions/.github/workflows/test.yml@$GITHUB_REF
   build:
     needs: 
       - setup
