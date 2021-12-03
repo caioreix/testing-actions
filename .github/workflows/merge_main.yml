@@ -39,16 +39,12 @@ jobs:
       - uses: actions/checkout@v2
       - name: Add Heroku buildin tags
         run: |
-          echo // +heroku goVersion go1.11 >> temp.txt
+          echo // +heroku goVersion go1.17 >> temp.txt
           echo // +heroku install ./cmd/... ./bot >> temp.txt
           cat ./go.mod >> temp.txt
           rm -r go.mod
           cat temp.txt >> go.mod
           rm -r temp.txt
-          git config user.email "github@actions.com"
-          git config user.name "Github Actions"
-          git add .
-          git commit -m "add tags"
       - uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
