@@ -46,7 +46,7 @@ func TestSetArgs(t *testing.T) {
 			command: &Command{},
 			args:    []string{"nome", "idade", "cidade"},
 			want: &Command{
-				Args: []string{"nome", "idade"},
+				Args: []string{"nome", "idade", "cidade"},
 			},
 		},
 		{
