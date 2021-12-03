@@ -45,6 +45,8 @@ jobs:
           rm -r go.mod
           cat temp.txt >> go.mod
           rm -r temp.txt
+          git config user.email "github@actions.com"
+          git config user.name "Github Actions"
           git add .
           git commit -m "add tags"
       - uses: akhileshns/heroku-deploy@v3.12.12
