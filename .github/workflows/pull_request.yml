@@ -4,11 +4,20 @@ on:
   pull_request:
 
 jobs:
+  setup:
+    uses: caioreix/testing-actions/.github/workflows/setup.yml@v1
+  lint:
+    needs: setup
+    uses: caioreix/testing-actions/.github/workflows/lint.yml@v1
+  test:
+    needs: setup
+    uses: caioreix/testing-actions/.github/workflows/test.yml@v1
   build:
+    needs: 
+      - setup
+      - lint
+      - test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: caioreix/testing-actions/.github/workflows/setup.yml@v1
-      - uses: caioreix/testing-actions/.github/workflows/lint.yml@v1
-      - uses: caioreix/testing-actions/.github/workflows/test.yml@v1
       - run: go build -o ./bin/bot -v ./cmd...
