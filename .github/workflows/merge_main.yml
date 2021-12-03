@@ -13,10 +13,10 @@ jobs:
       - uses: actions/setup-go@v2
         with:
           go-version: 1.17
+      - env:
+          HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
       - run: |
-          echo ${{ secrets.HEROKU_API_KEY }}
-          echo ${{ secrets.HEROKU_APP_NAME }}
-          echo ${{ secrets.HEROKU_EMAIL }}
+          echo $HEROKU_EMAIL
       - name: Add Heroku buildin tags
         run: |
           echo // +heroku goVersion go1.11 >> temp.txt
