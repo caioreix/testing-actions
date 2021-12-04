@@ -18,10 +18,10 @@ jobs:
     needs: setup
     uses: caioreix/testing-actions/.github/workflows/test.yml@main
   build:
-    # needs: 
-    #   - setup
-    #   - lint
-    #   - test
+    needs: 
+      - setup
+      - lint
+      - test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
