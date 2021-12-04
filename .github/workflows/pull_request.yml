@@ -4,6 +4,10 @@ on:
   pull_request:
 
 jobs:
+  echo:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo $GITHUB_REF
   setup:
     uses: caioreix/testing-actions/.github/workflows/setup.yml@$GITHUB_REF
   lint:
