@@ -10,29 +10,22 @@ on:
       - completed
 
 jobs:
-  echo:
+  deploy:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
-      - run: echo ${{ github.event.workflow_run.conclusion }}
-      - run: echo ${{ github.event_name }}
-      - run: echo ${{ github.ref }}
-      
-  # deploy:
-  #   runs-on: ubuntu-latest
-  #   if: ${{ github.event.workflow_run.conclusion == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: Add Heroku buildin tags
-  #       run: |
-  #         echo // +heroku goVersion go1.17 >> temp.txt
-  #         echo // +heroku install ./cmd/... >> temp.txt
-  #         cat ./go.mod >> temp.txt
-  #         rm -r go.mod
-  #         cat temp.txt >> go.mod
-  #         rm -r temp.txt
-  #     - uses: akhileshns/heroku-deploy@v3.12.12
-  #       with:
-  #         heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-  #         heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
-  #         heroku_email: ${{ secrets.HEROKU_EMAIL }}
-  #         procfile: "worker: bin/cmd"
+      - uses: actions/checkout@v2
+      - name: Add Heroku buildin tags
+        run: |
+          echo // +heroku goVersion go1.17 >> temp.txt
+          echo // +heroku install ./cmd/... >> temp.txt
+          cat ./go.mod >> temp.txt
+          rm -r go.mod
+          cat temp.txt >> go.mod
+          rm -r temp.txt
+      - uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
+          procfile: "worker: bin/cmd"
