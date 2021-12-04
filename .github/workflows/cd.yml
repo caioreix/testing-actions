@@ -16,6 +16,7 @@ jobs:
       - run: echo ${{ github.event.workflow_run.conclusion }}
       - run: echo ${{ github.event_name }}
       - run: echo ${{ github.ref }}
+      
   # deploy:
   #   runs-on: ubuntu-latest
   #   if: ${{ github.event.workflow_run.conclusion == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/main' }}
