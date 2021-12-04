@@ -10,7 +10,7 @@ jobs:
       - run: echo $GITHUB_REF
       - run: echo ${{ github.ref }}
   setup:
-    uses: caioreix/testing-actions/.github/workflows/setup.yml@refs/heads
+    uses: caioreix/testing-actions/.github/workflows/setup.yml@1
   # lint:
   #   needs: setup
   #   uses: caioreix/testing-actions/.github/workflows/lint.yml@$GITHUB_REF
