@@ -12,6 +12,7 @@ jobs:
         with:
           go-version: 1.17
   lint:
+    needs: setup
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -21,6 +22,7 @@ jobs:
           version: latest
           skip-go-installation: true
   test:
+    needs: setup
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
