@@ -5,13 +5,26 @@ on:
 
 jobs:
   setup:
-    uses: caioreix/testing-actions/.github/workflows/setup.yml@main
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-go@v2
+        with:
+          go-version: 1.17
   lint:
-    needs: setup
-    uses: caioreix/testing-actions/.github/workflows/lint.yml@main
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v2
+        with:
+          version: latest
+          skip-go-installation: true
   test:
-    needs: setup
-    uses: caioreix/testing-actions/.github/workflows/test.yml@main
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: go test -v -race ./...
   build:
     needs: 
       - setup
