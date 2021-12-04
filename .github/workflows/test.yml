@@ -1,0 +1,12 @@
+name: test
+
+on:
+  workflow_call:
+
+jobs:
+  test:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: go test -v -race ./...
